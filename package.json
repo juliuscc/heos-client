@@ -84,6 +84,6 @@
         "typescript": "^3.0.3"
     },
     "dependencies": {
-        "heos-api": "^3.3.1"
+        "heos-api": "^3.7.0"
     }
 }

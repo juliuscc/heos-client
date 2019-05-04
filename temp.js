@@ -1,16 +1,12 @@
-const heosApi = require('heos-api')
+const heos = require('.')
 
-heosApi
-	.discoverOneDevice()
-	.then(x => {
-		console.log(x)
-		return x
-	})
-	.then(address => heosApi.connect(address))
-	.then(connection =>
-		connection.on(
-			{ commandGroup: 'event', command: 'player_now_playing_progress' },
-			console.log
-		)
+heos.discoverAndConnect().then(async client => {
+	const prettyJsonResponse = await client.commands.system.prettifyJsonResponse(
+		'on'
 	)
-	.then(connection => connection.write('system', 'register_for_change_events', { enable: 'on' }))
+	console.log(JSON.stringify(prettyJsonResponse))
+	client.commands.system.heartBeat().then(response => {
+		const print = JSON.stringify(response)
+		console.log({ print })
+	})
+})
