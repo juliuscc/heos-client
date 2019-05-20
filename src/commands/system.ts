@@ -88,7 +88,7 @@ export default class HeosSystemCommands {
 		sendCommand(this.connection, 'system', 'sign_out')
 
 	/**
-	 * Sends heart beat to HEOS device. Mostly for debug purposes
+	 * Sends heart beat to HEOS device. Mostly for debug purposes.
 	 * @example ```heos://system/heart_beat```
 	 * @response
 	 * ```
@@ -106,7 +106,8 @@ export default class HeosSystemCommands {
 
 	/**
 	 * Reboots HEOS device. This command can only be used to reboot the HEOS
-	 * device to which the controller is connected to.
+	 * device to which the controller is connected to. This will end your
+	 * connection.
 	 * @example ```heos://system/reboot```
 	 * @response
 	 * ```
@@ -119,8 +120,9 @@ export default class HeosSystemCommands {
 	 * }
 	 * ```
 	 */
-	reboot = (): Promise<HeosResponse> =>
-		sendCommand(this.connection, 'system', 'reboot')
+	reboot = (): void => {
+		this.connection.write('system', 'reboot')
+	}
 
 	/**
 	 * Helper command to prettify JSON response. As `heos-client` parses every
