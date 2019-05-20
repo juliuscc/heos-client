@@ -15,7 +15,7 @@ export default function(
 ): Promise<HeosResponse> {
 	return new Promise((resolve, reject) => {
 		connection
-			.write(commandGroup, command)
+			.write(commandGroup, command, attributes)
 			.once(
 				{ commandGroup, command },
 				(message: HeosResponse | HeosEvent) => {
