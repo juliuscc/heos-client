@@ -20,25 +20,16 @@ export async function discoverAndConnect(
 	return client
 }
 
-type CommandWrapper = {
-	system: HeosSystemCommands
-	player: HeosPlayerCommands
-}
-
 export default class HeosClient {
 	constructor(connection: HeosConnection) {
 		this.connection = connection
 
-		this.commands = {
-			system: new HeosSystemCommands(this.connection),
-			player: new HeosPlayerCommands(this.connection)
-		}
+		this.system = new HeosSystemCommands(this.connection)
+		this.player = new HeosPlayerCommands(this.connection)
 	}
 
 	private connection: HeosConnection
 
-	/**
-	 * Send a command to a HEOS device
-	 */
-	commands: CommandWrapper
+	system: HeosSystemCommands
+	player: HeosPlayerCommands
 }
